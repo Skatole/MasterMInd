@@ -1,0 +1,13 @@
+D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.csprojAssemblyReference.cache
+D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.AssemblyInfoInputs.cache
+D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.AssemblyInfo.cs
+D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.csproj.CoreCompileInputs.cache
+D:\Repok\MasterMInd\bin\Debug\netcoreapp3.1\MasterMind.exe
+D:\Repok\MasterMInd\bin\Debug\netcoreapp3.1\MasterMind.deps.json
+D:\Repok\MasterMInd\bin\Debug\netcoreapp3.1\MasterMind.runtimeconfig.json
+D:\Repok\MasterMInd\bin\Debug\netcoreapp3.1\MasterMind.runtimeconfig.dev.json
+D:\Repok\MasterMInd\bin\Debug\netcoreapp3.1\MasterMind.dll
+D:\Repok\MasterMInd\bin\Debug\netcoreapp3.1\MasterMind.pdb
+D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.dll
+D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.pdb
+D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.genruntimeconfig.cache

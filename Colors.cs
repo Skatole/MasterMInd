@@ -15,13 +15,13 @@ namespace MasterMind
     public static string transferToAltChar(this Colors colors) {
       switch (colors)
       {
-        case Colors.Blue: return "◯";
-        case Colors.Green: return "◯";
-        case Colors.Black: return "◯";
-        case Colors.Red: return "◯";
-        case Colors.Yellow: return "◯";
-        case Colors.White: return "◯";
-        case Colors.Purple: return "◯";
+        case Colors.Blue: return "B";
+        case Colors.Green: return "G";
+        case Colors.Black: return "b";
+        case Colors.Red: return "R";
+        case Colors.Yellow: return "Y";
+        case Colors.White: return "W";
+        case Colors.Purple: return "P";
         default: return "◯";
       }
     }
