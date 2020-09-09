@@ -20,9 +20,7 @@ namespace Board
 			{
 			board[i][j] = " o ";
 			}
-			Console.WriteLine( "|" + String.Join("|", board[i]) + "|" + "/" + String.Join("/", board[i + 3]) + "/");
-
-			
+			Console.WriteLine( "|" + String.Join("|", board[i]) + "|" + "/" + String.Join("/", board[i]) + "/");
 		}
 		return;
 		}
