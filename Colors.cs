@@ -8,6 +8,7 @@ namespace MasterMind
     Green,
     Yellow,
     White,
-    Purple
+    Purple,
+    Cyan
   }
 }

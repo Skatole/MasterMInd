@@ -1,33 +1,22 @@
 ﻿using System;
 using System.Collections.Generic;
 
-
-
 namespace MasterMind
 {
 	class Program
 	{
+		public static string guess = new string("");
 		static void Main(string[] args)
 		{
-			bool tryChecker = true;
-			List<string> guess = new List<string>();
-			Board.Boards drawBoard = new Board.Boards();
-			drawBoard.DrawBoard();
-			Logic.generateSolutionList();
-
-			while (tryChecker) {
+			Boards.DrawBoard();
+			Convert.checkAndConvert();
+			Generate.generateSolutionList();
+			while (Logic.tryChecker) 
+			{
 				Console.WriteLine("GUESS: ");
-				string input = string.Join(", ", Console.ReadLine()).ToString();
-				Logic.checkGuessAgainstSolution(input);
-				
-				
-				Console.WriteLine(input);
-				
-			
-				//guess.AddRange(((IEnumerable) input).Cast<string>());
+				guess = Console.ReadLine();
+				Logic.checkGuessAgainstSolution(guess);
 			}
-
-
 		}
 	}
 }

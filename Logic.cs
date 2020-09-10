@@ -6,83 +6,51 @@ namespace MasterMind
 {
 	public static class Logic
 	{
-		static Random random = new Random();
-		static List<string> solution = new List<string>();
-		static List<string> shuffledSolution = new List<string>();
-		static List<string>checkableSolution = new List<string>();
-		static string concat;
-		public static List<string> generateSolutionList() 
+		public static bool tryChecker = true;
+		public static int guessCounter = 0;
+		public static bool guessCounterCheck() 
 		{
-			var colorValue = Enum.GetNames(typeof (Color)).ToList<string>();
-			foreach ( var i in colorValue) 
-			{
-				if (i.SequenceEqual("Blue")) 
-				{
-					solution.Add("B");
-				}
-				if (i.SequenceEqual("Black")) 
-				{
-					solution.Add("b");
-				}
-				if (i.SequenceEqual("Red")) 
-				{
-					solution.Add("R");
-				}
-				if (i.SequenceEqual("Green")) 
-				{
-					solution.Add("G");
-				}
-				if (i.SequenceEqual("Yellow")) 
-				{
-					solution.Add("Y");
-				}
-				if (i.SequenceEqual("White")) 
-				{
-					solution.Add("W");
-				}
-				if (i.SequenceEqual("Purple")) 
-				{
-					solution.Add("P");
-				}
-			}
-			foreach ( var s in solution)
-			{
-				shuffledSolution.Insert(random.Next(0, shuffledSolution.Count + 1), s);
-				concat = String.Join(", ", shuffledSolution);
-				
-			}
-			string cutConcat = concat.Substring(0, 10);
-			Console.WriteLine(cutConcat);
-			checkableSolution = cutConcat.Split(",").ToList();
-			return checkableSolution;
+			guessCounter++;
+			if (guessCounter <= 10) return tryChecker = true;
+			else return tryChecker = false;
 		}
-		public static bool checkGuessAgainstSolution(	string guessInput) 
-		{	
-			List<string> guessInputList = guessInput.Split(", ").ToList();
-			var result =  checkableSolution.FindAll( r => r.Equals(guessInputList));
-			//WIN checking
-			if (result.Count == 4) {
-				Console.WriteLine("WIN");
-				Console.Clear();
-				return true;
-			} 
-			// BLACK and WHITE dot determination ==> HINTS:
-			for ( var i = 0; i < checkableSolution.Count(); i++) {
-				for ( var j = 0; j < guessInputList.Count(); j++) {
-					if (result.Count > 0 && result.Count != 4) {
-						//WHITE dot for not being in the right place
+		public static bool checkGuessAgainstSolution(string guessString) 
+		{
+			
+			string convGuess = Convert.stringConverter(guessString);
+			Console.WriteLine($"conv: {convGuess} guess: {guessString}");
+			string solution = Generate.checkableSolution;
+			char[] solutionClone = solution.ToCharArray();
+			int whiteDot = 0;
+			int blackDot = 0;
 
-						if ( i == j ) {
-							// BLACK dot for beeing in the right place with the right color
-						}
-					} 
+			Console.WriteLine(solution + " CICA");
+			//WIN checking
+			if (convGuess == solution)
+			{
+				Console.WriteLine("WIN");
+				return tryChecker = false;
+			}
+			// BLACK and WHITE dot determination ==> HINTS:
+			for (int i = 0; i < solutionClone.Length; i++)
+			{
+				if (solutionClone[i] == convGuess[i])
+				{
+					blackDot++;
+					solutionClone[i] = ' ';
+					Console.WriteLine(blackDot + " blackDots");
+				}
+				// string solutionCloneString = string.Join("", solutionClone);
+				// int index = solutionCloneString.(guessString[i]);
+				if (solutionClone.Contains(convGuess[i]))
+				{
+					whiteDot++;
+					solutionClone[i] = ' ';
+					Console.WriteLine(whiteDot + " whiteDots");
+					
 				}
 			}
-			if (result.Count == 0) {
-				//Game continues no dots are being placed 
-				//also increment the guessCouter var. by one
-			}
-			return false; 
+			return tryChecker;
 		}	
 	}
 } 	
