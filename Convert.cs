@@ -1,27 +1,31 @@
 using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 
 namespace MasterMind
 {
   public static class Convert
   {
-    public static string guessInput = new string("");
     public static string solution = new string("");
-    public static string guessSubstring = new string("");
     public static string stringConverter(string guess)
     {
-			string  replacedGuess = guess.ToUpper().Replace(" ", "").Replace(",","");
+			string replacedGuess = Regex.Replace(guess, @"[^0-9a-zA-Z]+", "").ToUpper();
 			if ( replacedGuess.Length > 4)
 			{
-     		guessSubstring = replacedGuess.Remove(4);
+     		replacedGuess = replacedGuess.Substring(0, 4);
 				Console.WriteLine("Only Enter 4 characters!");
+				
 			}
-			guessInput = string.Join("", replacedGuess);
-			Override.overrideBoard(guessInput);
-			return guessInput;
+			if (replacedGuess.Length < 4)
+			{
+				replacedGuess = replacedGuess.Insert(replacedGuess.Length, "    ").Substring(0, 4);
+				Console.WriteLine("Please enter 4 character!");
+
+			}
+			return replacedGuess;
 		} 
-		public static string checkAndConvert()
+		public static string CheckAndConvert()
     {
 			List<string> solutionList = new List<string>();
 			var colorValue = Enum.GetNames(typeof (Color)).ToList<string>();
@@ -33,7 +37,7 @@ namespace MasterMind
 				}
 				if (i.SequenceEqual("Cyan")) 
 				{
-					solutionList.Add("F");
+					solutionList.Add("C");
 				}
 				if (i.SequenceEqual("Red")) 
 				{

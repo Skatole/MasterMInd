@@ -1,30 +1,20 @@
-using System.Collections.Generic;
 using System;
-using System.Linq;
-
 namespace MasterMind
 {
   public static class Generate
   {
     static Random random = new Random();
     public static string checkableSolution = new string("");
-    public static string generateSolutionList() 
+    public static string GenerateSolutionList() 
 		{
-			List<string> solutionList = new List<string>();
-    	List<string> shuffledSolution = new List<string>();
-    	string concat = new string("");
-
-			solutionList = Convert.solution.Split("").ToList();
-			foreach ( var s in solutionList)
+			Console.WriteLine(Convert.solution + " soltuion");
+			Shuffler[] solutionString = {Convert.solution};
+			foreach ( var solution in solutionString) 
 			{
-				shuffledSolution.Insert(random.Next(0, shuffledSolution.Count + 1), s);
-				concat = String.Join("", shuffledSolution);
-				concat.Replace(",","");
-				concat.Replace(" ","");
+				Console.WriteLine(solution.Shuffled);
+				checkableSolution = solution.Shuffled.Substring(0, 4);
 			}
-		string cutConcat = concat.Substring(0, 4);
-		checkableSolution = cutConcat;
-		return checkableSolution;
+			return checkableSolution;
 		}
-  }
+	}
 }
