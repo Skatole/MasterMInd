@@ -6,17 +6,25 @@ namespace MasterMind
 {
 	public static class Logic
 	{
+		public static List<string> memory = new List<string>();
+		public static int guessCounter = 0;
 		public static bool GuessCounterCheck() 
 		{
-			if (Program.guessCounter <= 2 && Program.guessCounter != 1) 
+			if (guessCounter < 10) 
 			{
+			Console.WriteLine(guessCounter);
+
+				guessCounter++;
 				return Program.tryChecker = true;
+
 			}
-			if (Program.guessCounter >= 3)
+			if (guessCounter >= 10)
 			{
+			Console.WriteLine(guessCounter);
+
 				Console.WriteLine();
 				Console.WriteLine("Your've ran out of tryes!");
-				Program.guessCounter = 0;
+				guessCounter = 0;
 				return Program.tryChecker = false;
 			}
 			return false; 
@@ -54,7 +62,11 @@ namespace MasterMind
 				}
 			Console.WriteLine(blackDot + " blackDots");
 			Console.WriteLine(whiteDot + " whiteDots");
-			Boards.OverrideBoard(convGuess, Program.guessCounter, blackDot, whiteDot);
+			for ( int g = 0; g < convGuess.Length; g++)
+			{
+			memory.Add(convGuess[g].ToString());
+			}
+			Boards.OverrideBoard(memory, guessCounter, blackDot, whiteDot);
 			return Program.tryChecker;
 		}
 	}

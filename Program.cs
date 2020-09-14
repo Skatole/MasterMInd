@@ -6,7 +6,6 @@ namespace MasterMind
 	{
 		public static string guess = new string("");
 		public static bool tryChecker = true;
-		public static int guessCounter = 0;
 		static void Main(string[] args)
 		{
 			Boards.DrawBoard();
@@ -18,6 +17,7 @@ namespace MasterMind
 				guess = Console.ReadLine();
 				Logic.GuessCounterCheck();
 				Logic.CheckGuessAgainstSolution(guess);
+				//overrideBoard With the guessINput
 			}
 		}
 	}
