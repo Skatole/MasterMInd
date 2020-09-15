@@ -6,39 +6,29 @@ namespace MasterMind
 {
 	public static class Logic
 	{
-		public static List<string> memory = new List<string>();
-		public static int guessCounter = 0;
-		public static bool GuessCounterCheck() 
+
+		public static bool GuessCounterCheck(int guessCounter) 
 		{
-			if (guessCounter < 10) 
+			if (guessCounter <= 9) 
 			{
-			Console.WriteLine(guessCounter);
-
-				guessCounter++;
+				Console.WriteLine(guessCounter + " in guesscheck");
 				return Program.tryChecker = true;
-
 			}
 			if (guessCounter >= 10)
 			{
-			Console.WriteLine(guessCounter);
-
-				Console.WriteLine();
-				Console.WriteLine("Your've ran out of tryes!");
+				Console.WriteLine(guessCounter);
+				Console.WriteLine("\n" + "Your've ran out of tryes!" + "\n");
 				guessCounter = 0;
 				return Program.tryChecker = false;
 			}
 			return false; 
 		}
-		public static bool CheckGuessAgainstSolution(string guessString) 
+		public static bool CheckGuessAgainstSolution(string convGuess, int blackDot, int whiteDot) 
 		{
-			string convGuess = Convert.stringConverter(guessString);
+			
 			string solution = Generate.checkableSolution;
 			char[] solutionClone = solution.ToCharArray();
-			int whiteDot = 0;
-			int blackDot = 0;
-
-			// Console.WriteLine(solution + " CICA");
-
+		
 			//WIN checking
 				if (convGuess == solution)
 				{
@@ -57,16 +47,14 @@ namespace MasterMind
 					{
 						whiteDot++;
 						solutionClone[i] = ' ';
-
+					}
+					else
+					{
+						return Program.tryChecker;
 					}
 				}
 			Console.WriteLine(blackDot + " blackDots");
 			Console.WriteLine(whiteDot + " whiteDots");
-			for ( int g = 0; g < convGuess.Length; g++)
-			{
-			memory.Add(convGuess[g].ToString());
-			}
-			Boards.OverrideBoard(memory, guessCounter, blackDot, whiteDot);
 			return Program.tryChecker;
 		}
 	}

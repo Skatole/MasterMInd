@@ -8,7 +8,7 @@ namespace MasterMind
   public static class Convert
   {
     public static string solution = new string("");
-    public static string stringConverter(string guess)
+    public static string stringEditor(string guess)
     {
 			string replacedGuess = Regex.Replace(guess, @"[^0-9a-zA-Z]+", "").ToUpper();
 			if ( replacedGuess.Length > 4)

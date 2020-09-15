@@ -7,51 +7,39 @@ namespace MasterMind
   public static class Boards
 	{
 		public static int columns = 4;
-		public static int rows = 5;
+		public static int rows = 10;
 		public static string memory = new string("");
-		public static string[][] guessBoard = new string[rows][];
-		public static string[][] hintBoard = new string[rows][];
 		
-		public static void DrawBoard()
+		public static void DrawBoard(List<List<string>> memory, int guessCounter, int blackDot, int whiteDot)
 		{
-			for ( var i = 0; i < rows; i++ ) 
+		 List<List<string>> guessBoard = new List<List<string>>();
+		 List<List<string>> hintBoard = new List<List<string>>();
+			for (var i = 0; i < rows; i++)
 			{
-				guessBoard[i] = new string[columns];
-				for ( var j = 0; j < columns; j++) 
+				List<string> subRowList = new List<string>();
+				for ( var j = 0; j < columns; j++)
 				{
-					guessBoard[i][j] = "o";
-				}
-				for ( var x = 0; x < i; x++)
-				{
-					hintBoard[x] = new string[columns];
-					for ( var y = 0; y < columns; y++) 
+					subRowList.Add("o");
+					if ( guessCounter >= 0)
 					{
-						hintBoard[x][y] = "o";
+						guessBoard[guessCounter][j] = memory[guessCounter][j];
 					}
-					Console.WriteLine( "|   " + String.Join("   |   ", guessBoard[i]) + "   |" + "    =>    " + "/   "+ String.Join("   /   ", hintBoard[x]) + "   /");
 				}
+				guessBoard.Add(subRowList);
+				hintBoard.Add(subRowList);
 			}
+			Print(guessBoard, hintBoard);
 		}
-		public static void OverrideBoard(List<string> memory, int guessCounter, int blackDot, int whiteDot)
+		public static void Print ( List<List<string>> guess, List<List<string>> hint)
 		{
-			for ( var i = 0; i < rows; i++ ) 
+			Console.WriteLine("\n");
+			for ( var i = 0; i < guess.Count; i++)
 			{
-				guessBoard[i] = new string[columns];
-				for ( var j = 0; j < columns; j++) 
-				{
-					guessBoard[i][j] = "o";
-					foreach (var memo in memory) guessBoard[guessCounter][j] = memo;
-				}
-				for ( var x = 0; x < i; x++)
-				{
-					hintBoard[x] = new string[columns];
-					for ( var y = 0; y < columns; y++) 
-					{
-						hintBoard[x][y] = "o";
-					}
-			Console.WriteLine( "|   " + String.Join("   |   ", guessBoard[i]) + "   |" + "    =>    " + "/   "+ String.Join("   /   ", hintBoard[x]) + "   /");
-				}
+				Console.WriteLine(  "|   " + String.Join("   |   ", guess[i]) + "   |" + "    =>    " + "/   "+ String.Join("   /   ", hint[i]) + "   /");
 			}
-  	}
-	}
+			Console.WriteLine("\n");
+			guess = null;
+			hint = null;
+		}
+  } 
 }
