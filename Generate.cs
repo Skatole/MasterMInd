@@ -5,14 +5,14 @@ namespace MasterMind
   {
     static Random random = new Random();
     public static string checkableSolution = new string("");
-    public static string GenerateSolutionList() 
+    public static string GenerateSolutionList(string solution) 
 		{
-			Console.WriteLine(Convert.solution + " soltuion");
-			Shuffler[] solutionString = {Convert.solution};
-			foreach ( var solution in solutionString) 
+			Console.WriteLine(solution + " soltuion");
+			Shuffler[] solutionString = {solution};
+			foreach ( var sol in solutionString) 
 			{
-				Console.WriteLine(solution.Shuffled);
-				checkableSolution = solution.Shuffled.Substring(0, 4);
+				Console.WriteLine(sol.Shuffled);
+				checkableSolution = sol.Shuffled.Substring(0, 4);
 			}
 			return checkableSolution;
 		}

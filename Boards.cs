@@ -8,38 +8,47 @@ namespace MasterMind
 	{
 		public static int columns = 4;
 		public static int rows = 10;
-		public static string memory = new string("");
-		
-		public static void DrawBoard(List<List<string>> memory, int guessCounter, int blackDot, int whiteDot)
+		public static void DrawBoard(List<List<string>> memory, int guessCounter, int blackDot, int whiteDot, List<List<string>> hintList )
 		{
-		 List<List<string>> guessBoard = new List<List<string>>();
-		 List<List<string>> hintBoard = new List<List<string>>();
 			for (var i = 0; i < rows; i++)
 			{
+				List<string> subGuessRowList = new List<string>();
+				List<string> subHintRowList = new List<string>();
+				for ( var j = 0; j < columns; j++)
+				{
+					subGuessRowList.Add("o");
+					subHintRowList.Add("o");
+				}
+				memory.Add(subGuessRowList);
+				hintList.Add(subHintRowList);
+				if (memory.Count > 10) memory.RemoveRange(10, memory.Count - 10);
+				if (hintList.Count > 10) hintList.RemoveRange(10, hintList.Count - 10);
+			}
+			// the hint board fill
+		/* 	for (var i = 0; i < rows; i++)
+			{
 				List<string> subRowList = new List<string>();
+			
 				for ( var j = 0; j < columns; j++)
 				{
 					subRowList.Add("o");
-					if ( guessCounter >= 0)
-					{
-						guessBoard[guessCounter][j] = memory[guessCounter][j];
-					}
 				}
-				guessBoard.Add(subRowList);
 				hintBoard.Add(subRowList);
-			}
-			Print(guessBoard, hintBoard);
+			} */
+			Print(memory, hintList);
 		}
 		public static void Print ( List<List<string>> guess, List<List<string>> hint)
 		{
+			
 			Console.WriteLine("\n");
 			for ( var i = 0; i < guess.Count; i++)
 			{
-				Console.WriteLine(  "|   " + String.Join("   |   ", guess[i]) + "   |" + "    =>    " + "/   "+ String.Join("   /   ", hint[i]) + "   /");
+				Console.WriteLine(  "|   " + String.Join("   |   ", guess[i]) + "   |" + "    =>    " + "(   "+ String.Join("   )(   ", hint[i]) + "   )");
 			}
-			Console.WriteLine("\n");
+			
 			guess = null;
 			hint = null;
+			Console.WriteLine("\n");
 		}
-  } 
+  }  
 }

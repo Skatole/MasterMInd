@@ -7,14 +7,13 @@ namespace MasterMind
 	public static class Logic
 	{
 
-		public static bool GuessCounterCheck(int guessCounter) 
+		public static bool GuessCounterCheck(int guessCounter, bool tryChecker) 
 		{
 			if (guessCounter <= 9) 
 			{
-				Console.WriteLine(guessCounter + " in guesscheck");
 				return Program.tryChecker = true;
 			}
-			if (guessCounter >= 10)
+			if (guessCounter == 10)
 			{
 				Console.WriteLine(guessCounter);
 				Console.WriteLine("\n" + "Your've ran out of tryes!" + "\n");
@@ -23,38 +22,49 @@ namespace MasterMind
 			}
 			return false; 
 		}
-		public static bool CheckGuessAgainstSolution(string convGuess, int blackDot, int whiteDot) 
+		public static bool CheckGuessAgainstSolution(
+			string convGuess,
+			int guessCounter,
+			int blackDot,
+			int whiteDot,
+			List<List<string>> hintList,
+			string solution) 
 		{
-			
-			string solution = Generate.checkableSolution;
-			char[] solutionClone = solution.ToCharArray();
+			List<string> solutionClone = solution.Select(c => c.ToString()).ToList();
+			List<string> hintSubList = new List<string>();
 		
-			//WIN checking
-				if (convGuess == solution)
+			// WIN determination
+			if (convGuess == solution)
+			{
+				Console.WriteLine("WIN");
+				return Program.tryChecker = false;
+			}
+
+			// BLACK and WHITE dot determination ==> HINTS:
+			for (int i = 0; i < solutionClone.Count; i++)
+			{
+				hintSubList.Add("o");
+				if (solutionClone[i] == convGuess[i].ToString())
 				{
-					Console.WriteLine("WIN");
-					return Program.tryChecker = false;
+					blackDot++;
+					hintSubList.Insert(i, "B");
+					solutionClone[i] = null;
 				}
-				// BLACK and WHITE dot determination ==> HINTS:
-				for (int i = 0; i < solutionClone.Length; i++)
+				if (solutionClone.Contains(convGuess[i].ToString()))
 				{
-					if (solutionClone[i] == convGuess[i])
-					{
-						blackDot++;
-						solutionClone[i] = ' ';
-					}
-					if (solutionClone.Contains(convGuess[i]))
-					{
-						whiteDot++;
-						solutionClone[i] = ' ';
-					}
-					else
-					{
-						return Program.tryChecker;
-					}
+					whiteDot++;
+					hintSubList.Insert(i, "W");
+					solutionClone[i] = null;
 				}
+			}
+			if ( hintSubList.Count > 4)
+			{
+				hintSubList.RemoveRange(4, hintSubList.Count - 4);
+			}
+			hintList.Insert(guessCounter, hintSubList);
 			Console.WriteLine(blackDot + " blackDots");
 			Console.WriteLine(whiteDot + " whiteDots");
+			Console.WriteLine(string.Join("", hintSubList).ToString());
 			return Program.tryChecker;
 		}
 	}
