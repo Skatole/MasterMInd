@@ -8,7 +8,7 @@ namespace MasterMind
 	{
 		public static int columns = 4;
 		public static int rows = 10;
-		public static void DrawBoard(List<List<string>> memory, int guessCounter, int blackDot, int whiteDot, List<List<string>> hintList )
+		public static void DrawBoard(List<List<string>> memory, int guessCounter, List<List<string>> hintList )
 		{
 			for (var i = 0; i < rows; i++)
 			{
@@ -24,17 +24,6 @@ namespace MasterMind
 				if (memory.Count > 10) memory.RemoveRange(10, memory.Count - 10);
 				if (hintList.Count > 10) hintList.RemoveRange(10, hintList.Count - 10);
 			}
-			// the hint board fill
-		/* 	for (var i = 0; i < rows; i++)
-			{
-				List<string> subRowList = new List<string>();
-			
-				for ( var j = 0; j < columns; j++)
-				{
-					subRowList.Add("o");
-				}
-				hintBoard.Add(subRowList);
-			} */
 			Print(memory, hintList);
 		}
 		public static void Print ( List<List<string>> guess, List<List<string>> hint)
@@ -43,7 +32,7 @@ namespace MasterMind
 			Console.WriteLine("\n");
 			for ( var i = 0; i < guess.Count; i++)
 			{
-				Console.WriteLine(  "|   " + String.Join("   |   ", guess[i]) + "   |" + "    =>    " + "(   "+ String.Join("   )(   ", hint[i]) + "   )");
+				Console.WriteLine( "		" + "|   " + String.Join("   |   ", guess[i]) + "   |" + "    =>    " + "(   "+ String.Join("   )(   ", hint[i]) + "   )" + "\n");
 			}
 			
 			guess = null;

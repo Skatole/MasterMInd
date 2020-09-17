@@ -7,22 +7,32 @@ namespace MasterMind
 {
   public static class Convert
   {
-    public static string stringEditor(string guess)
+    public static List<string> stringEditor(string guess)
     {
-			string replacedGuess = Regex.Replace(guess, @"[^0-9a-zA-Z]+", "").ToUpper();
-			if ( replacedGuess.Length > 4)
+			List<string> replacedGuessList = new List<string>();
+			string replacedGuess =  Regex.Replace(guess, @"[^0-9a-zA-Z]+", "").ToUpper();
+			for (var i = 0; i < replacedGuess.Length; i++)
 			{
-     		replacedGuess = replacedGuess.Substring(0, 4);
+				replacedGuessList.Add(replacedGuess[i].ToString());
+			}
+
+			if (  replacedGuessList.Count > 4)
+			{
+     		replacedGuessList.RemoveRange(4, replacedGuessList.Count - 4);
 				Console.WriteLine("Only Enter 4 characters!");
 				
 			}
 			if (replacedGuess.Length < 4)
 			{
-				replacedGuess = replacedGuess.Insert(replacedGuess.Length, "    ").Substring(0, 4);
+				for ( var i = 0; i < 4; i++)
+				{
+					replacedGuessList.Insert(replacedGuessList.Count, " ");
+				}
+     		replacedGuessList.RemoveRange(4, replacedGuessList.Count - 4);
 				Console.WriteLine("Please enter 4 character!");
 
 			}
-			return replacedGuess;
+			return replacedGuessList;
 		} 
 		public static string CheckAndConvert( string solution )
     {
@@ -30,33 +40,16 @@ namespace MasterMind
 			var colorValue = Enum.GetNames(typeof (Color)).ToList<string>();
 			foreach ( var i in colorValue) 
 			{
-				if (i.SequenceEqual("Blue")) 
+				switch(i)
 				{
-					solutionList.Add("B");
-				}
-				if (i.SequenceEqual("Cyan")) 
-				{
-					solutionList.Add("C");
-				}
-				if (i.SequenceEqual("Red")) 
-				{
-					solutionList.Add("R");
-				}
-				if (i.SequenceEqual("Green")) 
-				{
-					solutionList.Add("G");
-				}
-				if (i.SequenceEqual("Yellow")) 
-				{
-					solutionList.Add("Y");
-				}
-				if (i.SequenceEqual("White")) 
-				{
-					solutionList.Add("W");
-				}
-				if (i.SequenceEqual("Purple")) 
-				{
-					solutionList.Add("P");
+					case "Blue": solutionList.Add("B"); break;
+					case "Cyan": solutionList.Add("C"); break;
+					case "Red": solutionList.Add("R"); break;
+					case "Green": solutionList.Add("G"); break;
+					case "Yellow": solutionList.Add("Y"); break;
+					case "White": solutionList.Add("W"); break;
+					case "Purple": solutionList.Add("P"); break;
+					default: solutionList.Add(""); break;
 				}
 			}
 			solution = string.Join("", solutionList).ToString();

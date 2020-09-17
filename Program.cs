@@ -13,28 +13,28 @@ namespace MasterMind
 		public static int guessCounter = -1;
 		public static int blackDot = 0;
 		public static List<List<string>> hintList = new List<List<string>>();
-
 		public static List<List<string>> memory = new List<List<string>>();
+		public static List<string> convertedGuess = new List<string>();
 		static void Main(string[] args)
 		{
+			TxtParser.TxtParserFunction();
 			Boards.DrawBoard(
 				memory,
 				guessCounter,
-				blackDot,
-				whiteDot,
 				hintList);
+
 			solution = Convert.CheckAndConvert(solution);
 			solution = Generate.GenerateSolutionList(solution);
 			while (tryChecker) 
 			{
-				guessCounter++;
-				Logic.GuessCounterCheck(guessCounter, tryChecker);
-
-				Console.WriteLine(" \n GUESS: \n ");
+				Console.WriteLine( "\n" + "		 Color Input Options: B, C, R; G; Y; W; P;" + "\n");
+				Console.WriteLine(" \n 		GUESS: \n ");
 				guess = Console.ReadLine();
+				guessCounter++;
+				convertedGuess = Convert.stringEditor(guess);
+				memory.Insert(guessCounter, convertedGuess);
 
-				string convertedGuess = Convert.stringEditor(guess);
-				Logic.CheckGuessAgainstSolution(
+				tryChecker = Logic.CheckGuessAgainstSolution(
 					convertedGuess,
 					guessCounter,
 					blackDot,
@@ -42,16 +42,12 @@ namespace MasterMind
 					hintList,
 					solution);
 
-				List<string> subMemoryList = new List<string>();
-				subMemoryList.Add(convertedGuess);
-				memory.Insert(guessCounter, subMemoryList);
-
 				Boards.DrawBoard(
 					memory,
 					guessCounter,
-					blackDot,
-					whiteDot,
 					hintList);
+
+				tryChecker = Logic.GuessCounterCheck(guessCounter, tryChecker, solution);
 			}
 		}
 	}
