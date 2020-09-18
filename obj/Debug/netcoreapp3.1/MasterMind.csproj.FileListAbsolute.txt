@@ -11,3 +11,5 @@ D:\Repok\MasterMInd\bin\Debug\netcoreapp3.1\MasterMind.pdb
 D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.dll
 D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.pdb
 D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.genruntimeconfig.cache
+D:\Repok\MasterMInd\bin\Debug\netcoreapp3.1\Pastel.dll
+D:\Repok\MasterMInd\obj\Debug\netcoreapp3.1\MasterMind.csproj.CopyComplete

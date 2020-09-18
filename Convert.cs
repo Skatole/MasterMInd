@@ -37,7 +37,7 @@ namespace MasterMind
 		public static string CheckAndConvert( string solution )
     {
 			List<string> solutionList = new List<string>();
-			var colorValue = Enum.GetNames(typeof (Color)).ToList<string>();
+			var colorValue = Enum.GetNames(typeof (EnumColor)).ToList<string>();
 			foreach ( var i in colorValue) 
 			{
 				switch(i)

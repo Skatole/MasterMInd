@@ -1,8 +1,10 @@
 {
   "version": 2,
-  "dgSpecHash": "Shv2Yll5QOW/L5gxIfPmz3lBjRAh/FWwR4DZbOypqLIaQL+1+ZOdHu6dDgat6Y9Bomy2Vb3KqD1xMz0GytcabA==",
+  "dgSpecHash": "gJUEB7K2lHvQzb0YWcrCPqRR0jYOTbpVXYx/m6I+sbfABB3ydaFi0yi6ixUvECxMlJP+WihkQFgqVlpE9VpHVQ==",
   "success": true,
   "projectFilePath": "D:\\Repok\\MasterMInd\\MasterMind.csproj",
-  "expectedPackageFiles": [],
+  "expectedPackageFiles": [
+    "C:\\Users\\user\\.nuget\\packages\\pastel\\1.3.2\\pastel.1.3.2.nupkg.sha512"
+  ],
   "logs": []
 }

@@ -95,9 +95,9 @@ namespace MasterMind
 		}
  
 		// for the conversion form string to Shuffler
-		public static implicit operator Shuffler(string solutionInput)
+		public static implicit operator Shuffler(string stringInput)
 		{
-			return new Shuffler(solutionInput);
+			return new Shuffler(stringInput);
 		}
 	}
 }

@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Drawing;
+using Pastel;
 
 
 namespace MasterMind
@@ -27,8 +29,16 @@ namespace MasterMind
 			solution = Generate.GenerateSolutionList(solution);
 			while (tryChecker) 
 			{
-				Console.WriteLine( "\n" + "		 Color Input Options: B, C, R; G; Y; W; P;" + "\n");
-				Console.WriteLine(" \n 		GUESS: \n ");
+				Console.WriteLine( "\n	Color Input Options:"
+				+ "	B".Pastel(Color.Blue)
+				+ "	C".Pastel(Color.Cyan)
+				+ "	R".Pastel(Color.Red)
+				+ "	G".Pastel(Color.Green)
+				+ "	Y".Pastel(Color.Yellow)
+				+ "	W".Pastel(Color.WhiteSmoke)
+				+ "	P".Pastel(Color.BlueViolet)
+				+ "\n");
+				Console.WriteLine("\nGUESS: \n ");
 				guess = Console.ReadLine();
 				guessCounter++;
 				convertedGuess = Convert.stringEditor(guess);
