@@ -3,14 +3,16 @@ using System.Collections.Generic;
 using System.Drawing;
 using Pastel;
 
-
 namespace MasterMind
 {
 	class Program
 	{
 		public static string guess = new string("");
     public static string solution = new string("");
+    public static string colorOptions = new string("");
 		public static bool tryChecker = true;
+		public static bool validGuess = true;
+		public static string coloredSolution = new string("");
 		public static int whiteDot = 0;
 		public static int guessCounter = -1;
 		public static int blackDot = 0;
@@ -20,16 +22,15 @@ namespace MasterMind
 		static void Main(string[] args)
 		{
 			TxtParser.TxtParserFunction();
-			Boards.DrawBoard(
-				memory,
-				guessCounter,
-				hintList);
+			Boards.DrawBoard(memory, guessCounter, hintList);
 
-			solution = Convert.CheckAndConvert(solution);
-			solution = Generate.GenerateSolutionList(solution);
+			colorOptions = Convert.EnumConverter(colorOptions);
+			solution = Generate.GenerateSolutionList(colorOptions);
+			coloredSolution = Generate.printableSolution(solution);
 			while (tryChecker) 
 			{
-				Console.WriteLine( "\n	Color Input Options:"
+				Console.WriteLine( 
+				"\n	Color Input Options:"
 				+ "	B".Pastel(Color.Blue)
 				+ "	C".Pastel(Color.Cyan)
 				+ "	R".Pastel(Color.Red)
@@ -38,26 +39,29 @@ namespace MasterMind
 				+ "	W".Pastel(Color.WhiteSmoke)
 				+ "	P".Pastel(Color.BlueViolet)
 				+ "\n");
+
 				Console.WriteLine("\nGUESS: \n ");
 				guess = Console.ReadLine();
-				guessCounter++;
-				convertedGuess = Convert.stringEditor(guess);
-				memory.Insert(guessCounter, convertedGuess);
+				convertedGuess = Convert.GuessStringConverter(guess, colorOptions, guessCounter);
+				validGuess = Logic.InputStringValidation(validGuess, convertedGuess, colorOptions);
+				if(validGuess)
+				{
+					guessCounter++;
+					memory.Insert(guessCounter, convertedGuess);
 
-				tryChecker = Logic.CheckGuessAgainstSolution(
-					convertedGuess,
-					guessCounter,
-					blackDot,
-					whiteDot,
-					hintList,
-					solution);
+					tryChecker = Logic.CheckGuessAgainstSolution(
+						convertedGuess,
+						guessCounter,
+						blackDot,
+						whiteDot,
+						hintList,
+						solution,
+						coloredSolution);
 
-				Boards.DrawBoard(
-					memory,
-					guessCounter,
-					hintList);
+					Boards.DrawBoard(memory, guessCounter, hintList);
 
-				tryChecker = Logic.GuessCounterCheck(guessCounter, tryChecker, solution);
+					tryChecker = Logic.GuessCounterCheck(guessCounter, tryChecker, solution, coloredSolution);
+				}
 			}
 		}
 	}
