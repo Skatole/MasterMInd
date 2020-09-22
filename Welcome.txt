@@ -33,6 +33,7 @@
 	hints of your guess's correction level based on the solution.
 
 		HINTS : ( Right board ==> (   o   ) )
+
 			The black dot (B):
 			you have one of the right colors and
 			it's at the right position.
@@ -42,8 +43,8 @@
 			it's NOT on the right position.
 
 		COLORS : ( Left board ==> |   o   | )
-			You can choose from these colors:
 
+			You can choose from these colors:
 				Blue : B;
 				Cyan : C;
 				Red: R;
@@ -56,5 +57,4 @@
 	cetrain color of choice you don't have to write the whole color name. 
 	(which would be an invalid input)
 
-			
-			
+

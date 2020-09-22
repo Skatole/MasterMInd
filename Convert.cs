@@ -19,7 +19,7 @@ namespace MasterMind
      		replacedGuessList.RemoveRange(4, replacedGuessList.Count - 4);
 				Console.WriteLine("\n" + "	Only Enter 4 characters!".Pastel(Color.DarkRed) + "\n");
 			}
-			 else if (replacedGuess.Length < 4)
+			 else if (replacedGuessList.Count < 4 && replacedGuessList.Count != 0 && !replacedGuessList.Contains("S"))
 			{
 				for ( var i = 0; i < 4; i++) {replacedGuessList.Insert(replacedGuessList.Count, " ");}
      		replacedGuessList.RemoveRange(4, replacedGuessList.Count - 4);

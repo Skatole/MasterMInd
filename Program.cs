@@ -7,18 +7,19 @@ namespace MasterMind
 {
 	class Program
 	{
-		public static string guess = new string("");
-    public static string solution = new string("");
-    public static string colorOptions = new string("");
-		public static bool tryChecker = true;
-		public static bool validGuess = true;
-		public static string coloredSolution = new string("");
-		public static int whiteDot = 0;
-		public static int guessCounter = -1;
-		public static int blackDot = 0;
-		public static List<List<string>> hintList = new List<List<string>>();
-		public static List<List<string>> memory = new List<List<string>>();
-		public static List<string> convertedGuess = new List<string>();
+		static string guess = new string("");
+    static string solution = new string("");
+		static string coloredSolution = new string("");
+    static string colorOptions = new string("");
+		static bool tryChecker = true;
+		static bool validGuess = true;
+		static bool autoSolverRequired;
+		static int guessCounter = -1;
+		static int whiteDot = 0;
+		static int blackDot = 0;
+		static List<string> convertedGuess = new List<string>();
+		static List<List<string>> memory = new List<List<string>>();
+		static List<List<string>> hintList = new List<List<string>>();
 		static void Main(string[] args)
 		{
 			TxtParser.TxtParserFunction();
@@ -43,9 +44,15 @@ namespace MasterMind
 				Console.WriteLine("\nGUESS: \n ");
 				guess = Console.ReadLine();
 				convertedGuess = Convert.GuessStringConverter(guess, colorOptions, guessCounter);
+				// autoSolverRequired = Logic.AutoSolverInitialised(autoSolverRequired, convertedGuess);
 				validGuess = Logic.InputStringValidation(validGuess, convertedGuess, colorOptions);
 				if(validGuess)
 				{
+				/* 	if (autoSolverRequired)
+					{
+						guess = AutoSolver.GenerateAutoGuess(colorOptions);
+						convertedGuess = Convert.GuessStringConverter(guess, colorOptions, guessCounter);
+					} */
 					guessCounter++;
 					memory.Insert(guessCounter, convertedGuess);
 
@@ -56,7 +63,8 @@ namespace MasterMind
 						whiteDot,
 						hintList,
 						solution,
-						coloredSolution);
+						coloredSolution,
+						tryChecker);
 
 					Boards.DrawBoard(memory, guessCounter, hintList);
 

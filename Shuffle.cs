@@ -15,15 +15,9 @@ namespace MasterMind
 			get { return original; }
 		}
  
-		public string Shuffled
-		{
-			get { return shuffled.ToString(); }
-		}
+		public string Shuffled {get { return shuffled.ToString(); }}
  
-		public int Ignored
-		{
-			get { return ignoredChars; }
-		}
+		public int Ignored { get { return ignoredChars; } }
  
 		private void Swap(int pos1, int pos2)
 		{

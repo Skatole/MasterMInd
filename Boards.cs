@@ -51,6 +51,7 @@ namespace MasterMind
 					{
 						case "B": hint[i][j] = "o".Pastel(Color.Black); break;
 						case "W": hint[i][j] = "o".Pastel(Color.White); break;
+						case "o": hint[i][j] = "o".Pastel(Color.DarkSlateGray); break;
 					}
 				}
 			}
