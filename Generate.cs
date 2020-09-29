@@ -4,13 +4,14 @@ using System.Drawing;
 
 namespace MasterMind
 {
-  public static class Generate
+  public class Generate
   {
-    static string checkableSolution = new string("");
-    public static string GenerateSolutionList(string solution) 
+    string checkableSolution = new string("");
+    public string GenerateSolutionList(string solution) 
 		{
+			Variables variables = new Variables();
 			Shuffler[] solutionString = {solution};
-			foreach ( var sol in solutionString) { checkableSolution = sol.Shuffled.Substring(0, 4); }
+			foreach ( var sol in solutionString) { checkableSolution = sol.Shuffled.Substring(0, variables.columns); }
 			return checkableSolution;
 		}
 

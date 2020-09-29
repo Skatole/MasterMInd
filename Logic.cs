@@ -6,27 +6,27 @@ using System.Drawing;
 
 namespace MasterMind
 {
-	public static class Logic
+	public class Logic
 	{
-		public static bool InputStringValidation(bool validGuess, List<string> guess, string colorOptions)
+		public bool InputStringValidation(bool isGuessValid, List<string> guess, string colorOptions)
 		{
 			if( guess.Count == 0)
 			{
 				Console.WriteLine(" \n	Invalid guess input! \n 	Please choose from the given color input options. \n".Pastel(Color.DarkRed));
-				return validGuess = false;
+				return isGuessValid = false;
 			}
 			for ( var i = 0; i < guess.Count; i++)
 			{
 			/* 	if ( guess[i] == "S")
-					return validGuess = true; */
+					return isGuessValid = true; */
 				if ( guess[i].Split().Any(x => !colorOptions.Contains(x)))
 				{
 					guess[i] = "";
 					Console.WriteLine(" \n	Invalid guess input! \n 	Please choose from the given color input options. \n".Pastel(Color.DarkRed));
-					return validGuess = false;
+					return isGuessValid = false;
 				}
 			}
-			return validGuess;
+			return isGuessValid = true;
 		}
 
 	/* 	public static bool AutoSolverInitialised(bool autoSolverRequired, List<string> guess)
@@ -41,15 +41,15 @@ namespace MasterMind
 			}
 			return autoSolverRequired = false;
 		} */
-		public static bool GuessCounterCheck(int guessCounter, bool tryChecker, string solution, string coloredSolution) 
+		public bool GuessCounterCheck(int guessCounter, bool isGuessValid, string solution, string coloredSolution) 
 		{
-			if (guessCounter < 9 && tryChecker) return tryChecker = true;
+			if (guessCounter < 9 && isGuessValid) return isGuessValid = true;
 			if (guessCounter >= 9)
 			{
 				Console.WriteLine("\n" + "	Your've ran out of tryes!" + "\n".Pastel(Color.DarkRed));
 				guessCounter = 0;
 				Console.WriteLine("\n" + "	SOLUTION : ".Pastel(Color.LightGoldenrodYellow) + coloredSolution + "\n");
-				return tryChecker = false;
+				return isGuessValid = false;
 			}
 			return false; 
 		}
@@ -61,7 +61,7 @@ namespace MasterMind
 			List<List<string>> hintList,
 			string solution,
 			string coloredSolution,
-			bool tryChecker) 
+			bool isGuessValid) 
 		{
 			List<string> solutionClone = solution.Select(s => s.ToString()).ToList();
 			List<string> hintSubList = new List<string>();
@@ -94,9 +94,9 @@ namespace MasterMind
 			{
 				Console.WriteLine("\n WIN \n");
 				Console.WriteLine("\n" + "SOLUTION : " + coloredSolution + "\n");
-				return tryChecker = false;
+				return isGuessValid = false;
 			}
-				return tryChecker;
+				return isGuessValid = true;
 		}
 	}
 }

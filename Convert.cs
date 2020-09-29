@@ -7,9 +7,9 @@ using Pastel;
 
 namespace MasterMind
 {
-  public static class Convert
+  public class Convert
   {
-    public static List<string> GuessStringConverter(string guess, string colorOptions, int guessCounter)
+    public List<string> GuessStringConverter(string guess, string colorOptions, int guessCounter)
     {
 			List<string> replacedGuessList = new List<string>();
 			string replacedGuess =  Regex.Replace(guess, @"[^0-9a-zA-Z]+", "").ToUpper();
@@ -27,10 +27,10 @@ namespace MasterMind
 			}
 			return replacedGuessList;
 		} 
-		public static string EnumConverter( string colorOptions)
+		public static string ColorConverter( string colorOptions)
     {
 			List<string> optionList = new List<string>();
-			var colorValue = Enum.GetNames(typeof (EnumColor)).ToList<string>();
+			var colorValue = Enum.GetNames(typeof (PecekColor)).ToList<string>();
 			foreach ( var i in colorValue) 
 			{
 				switch(i)

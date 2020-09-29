@@ -5,32 +5,32 @@ using Pastel;
 
 namespace MasterMind
 {
-	class Program
+	public class Program
 	{
-		static string guess = new string("");
-    static string solution = new string("");
-		static string coloredSolution = new string("");
-    static string colorOptions = new string("");
-		static bool tryChecker = true;
-		static bool validGuess = true;
-		static bool autoSolverRequired;
-		static int guessCounter = -1;
-		static int whiteDot = 0;
-		static int blackDot = 0;
-		static List<string> convertedGuess = new List<string>();
-		static List<List<string>> memory = new List<List<string>>();
-		static List<List<string>> hintList = new List<List<string>>();
-		static void Main(string[] args)
+		private static void Main(string[] args)
 		{
-			TxtParser.TxtParserFunction();
-			Boards.DrawBoard(memory, guessCounter, hintList);
+			TxtParser txtParser = new TxtParser();
+			txtParser.TxtParserFunction();
 
-			colorOptions = Convert.EnumConverter(colorOptions);
-			solution = Generate.GenerateSolutionList(colorOptions);
-			coloredSolution = Generate.printableSolution(solution);
-			while (tryChecker) 
+			Variables variables = new Variables();
+
+			Boards boards = new Boards();
+			boards.DrawBoard(	variables.guessMemory,
+												variables.guessCounter,
+												variables.hintList,
+												variables.rows,
+												variables.columns);
+
+			Convert convert = new Convert();
+			variables.colorOptions = Convert.ColorConverter(	variables.colorOptions	);
+
+			Generate generate = new Generate();
+			variables.solution = generate.GenerateSolutionList(	variables.colorOptions	);
+			string coloredSolution = Generate.printableSolution(	variables.solution	);
+
+			while (	variables.isTryValid	)
 			{
-				Console.WriteLine( 
+				Console.WriteLine(
 				"\n	Color Input Options:"
 				+ "	B".Pastel(Color.Blue)
 				+ "	C".Pastel(Color.Cyan)
@@ -42,33 +42,36 @@ namespace MasterMind
 				+ "\n");
 
 				Console.WriteLine("\nGUESS: \n ");
-				guess = Console.ReadLine();
-				convertedGuess = Convert.GuessStringConverter(guess, colorOptions, guessCounter);
-				// autoSolverRequired = Logic.AutoSolverInitialised(autoSolverRequired, convertedGuess);
-				validGuess = Logic.InputStringValidation(validGuess, convertedGuess, colorOptions);
-				if(validGuess)
+				variables.guess = Console.ReadLine();
+				variables.convertedGuess = convert.GuessStringConverter(	variables.guess,
+																																	variables.colorOptions,
+																																	variables.guessCounter	);
+
+				Logic logic = new Logic();
+				variables.isGuessValid = logic.InputStringValidation(	variables.isGuessValid,
+																															variables.convertedGuess,
+																															variables.colorOptions	);
+				if (variables.isGuessValid)
 				{
-				/* 	if (autoSolverRequired)
-					{
-						guess = AutoSolver.GenerateAutoGuess(colorOptions);
-						convertedGuess = Convert.GuessStringConverter(guess, colorOptions, guessCounter);
-					} */
-					guessCounter++;
-					memory.Insert(guessCounter, convertedGuess);
-
-					tryChecker = Logic.CheckGuessAgainstSolution(
-						convertedGuess,
-						guessCounter,
-						blackDot,
-						whiteDot,
-						hintList,
-						solution,
-						coloredSolution,
-						tryChecker);
-
-					Boards.DrawBoard(memory, guessCounter, hintList);
-
-					tryChecker = Logic.GuessCounterCheck(guessCounter, tryChecker, solution, coloredSolution);
+					variables.guessCounter++;
+					variables.guessMemory.Insert(	variables.guessCounter, variables.convertedGuess	);
+					variables.isTryValid = Logic.CheckGuessAgainstSolution(	variables.convertedGuess,
+																																	variables.guessCounter,
+																																	variables.blackDot,
+																																	variables.whiteDot,
+																																	variables.hintList,
+																																	variables.solution,
+																																	coloredSolution,
+																																	variables.isGuessValid	);
+					boards.DrawBoard(	variables.guessMemory,
+														variables.guessCounter,
+														variables.hintList,
+														variables.rows,
+														variables.columns	);
+					variables.isTryValid = logic.GuessCounterCheck(	variables.guessCounter,
+																													variables.isTryValid,
+																													variables.solution,
+																													coloredSolution	);
 				}
 			}
 		}

@@ -1,6 +1,6 @@
 namespace MasterMind
 {
-  public enum EnumColor
+  public enum PecekColor
   {
     Blue,
     Black,

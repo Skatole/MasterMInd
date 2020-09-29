@@ -4,12 +4,12 @@ using System;
 
 namespace MasterMind
 {
-  public static class TxtParser
+  public class TxtParser
   {
 		public static FileInfo fi = new FileInfo("Welcome.txt");
-    public static StreamReader parser = fi.OpenText();
-		public static string line;
-		public static void TxtParserFunction()
+    public StreamReader parser = fi.OpenText();
+		public string line;
+		public void TxtParserFunction()
 		{
 			while ((line = parser.ReadLine()) != null) 
 			{
