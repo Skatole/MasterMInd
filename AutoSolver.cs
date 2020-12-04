@@ -1,4 +1,4 @@
-/* using System.Collections.Generic;
+using System.Collections.Generic;
 using System;
 using System.Linq;
 using Pastel;
@@ -6,14 +6,12 @@ using System.Drawing;
 
 namespace MasterMind
 {
-  public static class AutoSolver
+  public class AutoSolver
   {
-		static string starterAutoGuess = new string("");
-    public static string GenerateAutoGuess(string colorOptions) 
+		static string starter = new string("");
+    private PecekColor[]  GenerateGuess( Variables variables) 
 		{
-			Shuffler[] solutionString = {colorOptions};
-			foreach ( var color in solutionString) { starterAutoGuess = color.Shuffled.Substring(0, 4); }
-			return starterAutoGuess;
+
 		}
 
 		public static string GenerateHintBasedSolution(int blackDot, int whiteDot)
@@ -28,4 +26,4 @@ namespace MasterMind
 			return starterAutoGuess;
 		}
   }
-} */
+} 

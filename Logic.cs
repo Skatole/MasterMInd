@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System;
 using System.Linq;
+using System.Text.RegularExpressions;
 using Pastel;
 using System.Drawing;
 
@@ -8,96 +9,59 @@ namespace MasterMind
 {
 	public class Logic
 	{
-		public bool InputStringValidation(bool isGuessValid, List<string> guess, string colorOptions)
+		public static void GuessCounterCheck( Variables variables ) 
 		{
-			if( guess.Count == 0)
+			Console.WriteLine(variables.isGuessValid +  " isguessvalid");
+			if (variables.guessCounter < variables.rows && variables.isGuessValid)
 			{
-				Console.WriteLine(" \n	Invalid guess input! \n 	Please choose from the given color input options. \n".Pastel(Color.DarkRed));
-				return isGuessValid = false;
-			}
-			for ( var i = 0; i < guess.Count; i++)
+				variables.guessCounter++;
+				variables.isTryValid = true;
+			} 
+			if (variables.guessCounter >= variables.rows)
 			{
-			/* 	if ( guess[i] == "S")
-					return isGuessValid = true; */
-				if ( guess[i].Split().Any(x => !colorOptions.Contains(x)))
-				{
-					guess[i] = "";
-					Console.WriteLine(" \n	Invalid guess input! \n 	Please choose from the given color input options. \n".Pastel(Color.DarkRed));
-					return isGuessValid = false;
-				}
+				// variables.guessCounter = 0;
+				variables.isTryValid = false;
 			}
-			return isGuessValid = true;
 		}
+		public bool CheckGuessAgainstSolution( Variables variables ) 
+		{
+			PecekColor[] solutionClone = (PecekColor[]) variables.solution.Clone();
+			PecekColor[] guessMemoryClone = (PecekColor[]) variables.guessMemory[variables.guessCounter].Clone();
 
-	/* 	public static bool AutoSolverInitialised(bool autoSolverRequired, List<string> guess)
-		{
-			for ( var i = 0; i < guess.Count; i++)
-			{
-				if (guess.Contains("S"))
-				{
-					Console.WriteLine("AutoSolver initialised!".Pastel(Color.MediumVioletRed));
-					return autoSolverRequired = true;
-				}
-			}
-			return autoSolverRequired = false;
-		} */
-		public bool GuessCounterCheck(int guessCounter, bool isGuessValid, string solution, string coloredSolution) 
-		{
-			if (guessCounter < 9 && isGuessValid) return isGuessValid = true;
-			if (guessCounter >= 9)
-			{
-				Console.WriteLine("\n" + "	Your've ran out of tryes!" + "\n".Pastel(Color.DarkRed));
-				guessCounter = 0;
-				Console.WriteLine("\n" + "	SOLUTION : ".Pastel(Color.LightGoldenrodYellow) + coloredSolution + "\n");
-				return isGuessValid = false;
-			}
-			return false; 
-		}
-		public static bool CheckGuessAgainstSolution(
-			List<string> convGuess,
-			int guessCounter,
-			int blackDot,
-			int whiteDot,
-			List<List<string>> hintList,
-			string solution,
-			string coloredSolution,
-			bool isGuessValid) 
-		{
-			List<string> solutionClone = solution.Select(s => s.ToString()).ToList();
-			List<string> hintSubList = new List<string>();
-			
+			variables.hintArr[variables.guessCounter] = new PecekColor[variables.columns];
 			// BLACK and WHITE dot determination ==> HINTS:
-			for (int i = 0; i < solutionClone.Count; i++)
-			{
-				if (convGuess[i] == solutionClone[i])
-				{
-					blackDot++;
-					hintSubList.Insert(i, "B");
-					solutionClone[i] = "?";
-				}
-				else if (convGuess.Contains(solutionClone[i]))
-				{
-					whiteDot++;
-					hintSubList.Insert(i, "W");
-					solutionClone[i] = "?";
-				}
-				hintSubList.Add("o");
-			}
-			// cut the excess "o" and shuffle the hintList:
-			if ( hintSubList.Count > 4) { hintSubList.RemoveRange(4, hintSubList.Count - 4); }
 			
-			Shuffler[] shuffledHintString = {string.Join("", hintSubList).ToString()};
-			for (var j = 0; j < shuffledHintString.Length; j++) { hintList[guessCounter] = shuffledHintString[j].Shuffled.Select(h => h.ToString()).ToList(); }
+			for (int i = 0; i < guessMemoryClone.Length; i++)
+			{
+				if (solutionClone[i] == guessMemoryClone[i])
+				{
+					variables.hintArr[variables.guessCounter][i] = PecekColor.Black;
+					solutionClone[i] = PecekColor.SolutionEmpty;
+					guessMemoryClone[i] = PecekColor.GuessEmpty;
+				}
+			}
+			for (int j = 0; j < guessMemoryClone.Length; j++)
+			{
+				for (int k = 0; k < solutionClone.Length; k++)
+				{
+					if ( solutionClone[k] == guessMemoryClone[j] )
+						{
+							variables.hintArr[variables.guessCounter][j] = PecekColor.White;
+							solutionClone[k] = PecekColor.SolutionEmpty;
+							guessMemoryClone[j] = PecekColor.GuessEmpty;
+						}
+				}
+			}
 
 			// WIN determination
-			if (convGuess.SequenceEqual(solutionClone) || blackDot == 4)
+			if ( variables.guessMemory[variables.guessCounter].SequenceEqual(variables.solution))
 			{
-				Console.WriteLine("\n WIN \n");
-				Console.WriteLine("\n" + "SOLUTION : " + coloredSolution + "\n");
-				return isGuessValid = false;
+				return variables.isTryValid = false;
 			}
-				return isGuessValid = true;
+
+				return variables.isTryValid;
 		}
+
 	}
 }
 

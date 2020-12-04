@@ -9,26 +9,27 @@ namespace MasterMind
 	{
 		private static void Main(string[] args)
 		{
+			Variables variables = new Variables();
+
 			TxtParser txtParser = new TxtParser();
 			txtParser.TxtParserFunction();
 
-			Variables variables = new Variables();
+			GenerateRandom generate = new GenerateRandom();
+			generate.randomPecek( variables.solution, variables );
 
-			Boards boards = new Boards();
-			boards.DrawBoard(	variables.guessMemory,
-												variables.guessCounter,
-												variables.hintList,
-												variables.rows,
-												variables.columns);
+			Display display = new Display();
+			// display.Print( variables );
 
-			Convert convert = new Convert();
-			variables.colorOptions = Convert.ColorConverter(	variables.colorOptions	);
 
-			Generate generate = new Generate();
-			variables.solution = generate.GenerateSolutionList(	variables.colorOptions	);
-			string coloredSolution = Generate.printableSolution(	variables.solution	);
 
-			while (	variables.isTryValid	)
+			// Convert convert = new Convert();
+			// variables.colorOptions = Convert.ColorConverter(	variables.colorOptions	);
+
+			// Generate generate = new Generate();
+			// generate.GenerateSolutionList( variables );
+			// string coloredSolution = Generate.printableSolution( variables.solution );
+
+			while (	variables.isTryValid )
 			{
 				Console.WriteLine(
 				"\n	Color Input Options:"
@@ -43,36 +44,14 @@ namespace MasterMind
 
 				Console.WriteLine("\nGUESS: \n ");
 				variables.guess = Console.ReadLine();
-				variables.convertedGuess = convert.GuessStringConverter(	variables.guess,
-																																	variables.colorOptions,
-																																	variables.guessCounter	);
-
-				Logic logic = new Logic();
-				variables.isGuessValid = logic.InputStringValidation(	variables.isGuessValid,
-																															variables.convertedGuess,
-																															variables.colorOptions	);
-				if (variables.isGuessValid)
+				if (variables.isGuessValid && variables.isTryValid)
 				{
-					variables.guessCounter++;
-					variables.guessMemory.Insert(	variables.guessCounter, variables.convertedGuess	);
-					variables.isTryValid = Logic.CheckGuessAgainstSolution(	variables.convertedGuess,
-																																	variables.guessCounter,
-																																	variables.blackDot,
-																																	variables.whiteDot,
-																																	variables.hintList,
-																																	variables.solution,
-																																	coloredSolution,
-																																	variables.isGuessValid	);
-					boards.DrawBoard(	variables.guessMemory,
-														variables.guessCounter,
-														variables.hintList,
-														variables.rows,
-														variables.columns	);
-					variables.isTryValid = logic.GuessCounterCheck(	variables.guessCounter,
-																													variables.isTryValid,
-																													variables.solution,
-																													coloredSolution	);
+					Logic logic = new Logic();
+					logic.CheckGuessAgainstSolution( variables );
+					display.Print( variables );
+					Logic.GuessCounterCheck( variables );
 				}
+
 			}
 		}
 	}

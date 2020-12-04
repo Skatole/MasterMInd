@@ -2,13 +2,17 @@ namespace MasterMind
 {
   public enum PecekColor
   {
+    None,
     Blue,
-    Black,
     Red,
     Green,
     Yellow,
-    White,
     Purple,
     Cyan,
+    White,
+    Black,
+    GuessEmpty,
+    SolutionEmpty
+
   }
 }
